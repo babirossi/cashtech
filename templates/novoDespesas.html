@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Novo Livro</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css')}}">
+
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .titulo {
+            flex-basis: 40%;
+            text-align: left;
+        }
+
+        .autor {
+            flex-basis: 40%;
+            text-align: left;
+        }
+
+        .ano_publicacao {
+            flex-basis: 10%;
+            text-align: right;
+        }
+
+        .btn-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-container form,
+        .btn-container a {
+            margin: 5px;
+        }
+        form {
+            border: none;
+            border-radius: 10px;
+            background-color: #3D3C3C;
+            padding: 20px;
+            width: 300px;
+        }
+        form input[type="text"],
+        form input[type="email"],
+        form textarea {
+            width: 200px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            color: #333;
+        }
+
+        .tabela {
+            background-color: #3D3C3C
+            color: white
+        }
+    </style>
+
+
+</head>
+<body>
+  <div class="container">
+
+    <!-- ============EXIBIR DESPESAS============== -->
+
+    <h1>Despesas</h1>
+    <a href="{{ url_for('index') }}" class="btn btn-primary">Home</a>
+
+    <div>
+        {% for despesas in despe %}
+            <div class="tabela">
+                <span class="nome">Nome</span>
+                <span class="nome">{{ despesas['nome'] }}</span>
+
+                <span class="valor">valor</span>
+                <span class="valor">{{ despesas['valor'] }}</span>
+
+                <span class="data">Data</span>
+                <span class="data">{{ despesas['data'] }}</span>
+
+                <span>&nbsp;</span>
+                <span class="deletar"><a href="{{ url_for('deletarDespe', id=despesas.id_despesas)}}">Excluir</a></span>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- ========CADASTRAR DESPESAS========= -->
+
+    <div class="page-header">
+      <h1>{{titulo}}</h1>
+    </div>
+
+    <form action="{{ url_for('criarDespe') }}" method="post" enctype="multipart/form-data">
+
+        <div class="form-group">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="nome" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="valor">Valor</label>
+          <input type="text" id="valor" name="valor" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="data">Data</label>
+          <input type="text" id="data" name="data" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
+
+    </form>
+
+  </div>
+
+</body>
+</html>

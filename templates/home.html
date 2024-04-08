@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css')}}">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+            margin: 0 auto;
+            max-width: 600px;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .titulo {
+            flex-basis: 40%;
+            text-align: left;
+        }
+
+        .autor {
+            flex-basis: 40%;
+            text-align: left;
+        }
+
+        .ano_publicacao {
+            flex-basis: 10%;
+            text-align: right;
+        }
+
+        .btn-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-container form,
+        .btn-container a {
+            margin: 5px;
+        }
+
+        h1, div {
+            margin-top: 20px;
+            text-align: center;
+            gap: 10px
+        }
+
+        .saldo {
+            display: flex;
+            justify-content: center;
+        }
+        .logo {
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: left center;
+            width: 100px;
+            height: auto;
+            margin-right: 20px;
+        }
+        .receitas-despesas-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .receitas, .despesas {
+            background-color: #3D3C3C;
+            padding: 20px;
+            margin: 0 10px;
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .receitas p, .despesas p {
+            margin: 0;
+        }
+        h1 {
+            align-self: flex-start;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body class="tela">
+    <div class="btn-container">
+        {% if session['id'] %}
+            <form action="{{ url_for('logout') }}" method="post">
+                <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+        {% else %}
+            <form action="{{ url_for('login_form') }}">
+                <button type="submit" class="btn btn-danger">Login</button>
+            </form>
+        {% endif %}
+        <form action="{{ url_for('index') }}">
+            <button type="submit" class="btn btn-danger">Home</button>
+        </form>
+        <a href="{{ url_for('novoRece') }}" class="btn btn-primary">Cadastrar Receita</a>
+        <a href="{{ url_for('novoDespe') }}" class="btn btn-primary">Cadastrar Despesa</a>
+    </div>
+
+    <div class="saldo">
+        <div class="logo"><img src="../static/imagem/Logo.png"></div>
+        <h1>CASHTECH</h1>
+
+        <div>
+            <p>Saldo Total: </p>
+            <p>{{ total_receitas - total_despesas }}</p>
+        </div>
+    </div>
+
+    <div class="receitas-despesas-container">
+        <div class="receitas">
+            <p>Receitas:</p>
+            <p>{{ total_receitas }}</p>
+        </div>
+        <div class="despesas">
+            <p>Despesas:</p>
+            <p>{{ total_despesas }}</p>
+        </div>
+    </div>
+
+</body>
+</html>
